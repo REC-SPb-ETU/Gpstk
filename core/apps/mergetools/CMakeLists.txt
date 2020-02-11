@@ -3,15 +3,15 @@
 
 add_executable(mergeRinObs mergeRinObs.cpp)
 target_link_libraries(mergeRinObs gpstk)
-install (TARGETS mergeRinObs DESTINATION "${CMAKE_INSTALL_BINDIR}")
+install (TARGETS mergeRinObs DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT bin)
 
 add_executable(mergeRinNav mergeRinNav.cpp)
 target_link_libraries(mergeRinNav gpstk)
-install (TARGETS mergeRinNav DESTINATION "${CMAKE_INSTALL_BINDIR}")
+install (TARGETS mergeRinNav DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT bin)
 
 add_executable(mergeRinMet mergeRinMet.cpp)
 target_link_libraries(mergeRinMet gpstk)
-install (TARGETS mergeRinMet DESTINATION "${CMAKE_INSTALL_BINDIR}")
+install (TARGETS mergeRinMet DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT bin)
 
 if (CMAKE_SYSTEM_NAME MATCHES "SunOS")
   target_link_libraries(mergeRinObs gen)

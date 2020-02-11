@@ -155,7 +155,7 @@ endif()
 #----------------------------------------
 configure_file( "${PROJECT_SOURCE_DIR}/build_config.h.in" "${PROJECT_BINARY_DIR}/generated/build_config.h" )
 include_directories( "${PROJECT_BINARY_DIR}/generated/" ) 
-install( FILES "${PROJECT_BINARY_DIR}/generated/build_config.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/gpstk" )
+install( FILES "${PROJECT_BINARY_DIR}/generated/build_config.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/gpstk" COMPONENT devel)
 
 
 #----------------------------------------
@@ -184,6 +184,9 @@ elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
     set( CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
 endif()
 
+#### PACKAGING COMMON #############################################
+set( CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set( CPACK_PACKAGE_VERSION ${GPSTK_VERSION})
 set( CPACK_PACKAGE_DESCRIPTION_SUMMARY "Libraries and applications for the GNSS processing GPSTk toolkit.") 
 set( CPACK_PACKAGE_VENDOR "ARL:UT SGL" )
 set( CPACK_PACKAGE_CONTACT "Bryan Parsons <bparsons@arlut.utexas.edu>" )
@@ -193,8 +196,26 @@ set( CPACK_PACKAGE_VERSION_MINOR "${GPSTK_VERSION_MINOR}" )
 set( CPACK_PACKAGE_VERSION_PATCH "${GPSTK_VERSION_PATCH}" )
 set( CPACK_INCLUDE_TOPLEVEL_DIRECTORY "OFF" )
 set( CPACK_PACKAGE_INSTALL_DIRECTORY "gpstk")
-set( CPACK_TOPLEVEL_TAG "gpstk" ) 
+set( CPACK_TOPLEVEL_TAG "gpstk" )
 
+
+#### RPM SPECIFIC #################################################
+set( CPACK_RPM_COMPONENT_INSTALL ON)
+set( CPACK_RPM_PACKAGE_RELEASE ${PACKAGE_RELEASE})
+set( CPACK_RPM_devel_PACKAGE_REQUIRES "${CPACK_PACKAGE_NAME}-lib = ${PROJECT_VERSION}-${PACKAGE_RELEASE}")
+
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(CPACK_RPM_PACKAGE_ARCHITECTURE x86_64)
+else()
+    set(CPACK_RPM_PACKAGE_ARCHITECTURE i586)
+endif()
+
+set( CPACK_RPM_DEVEL_FILE_NAME "${CPACK_PACKAGE_NAME}-devel-${CPACK_PACKAGE_VERSION}-${CPACK_RPM_PACKAGE_RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE}.rpm")
+set( CPACK_RPM_LIB_FILE_NAME     "${CPACK_PACKAGE_NAME}-lib-${CPACK_PACKAGE_VERSION}-${CPACK_RPM_PACKAGE_RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE}.rpm")
+set( CPACK_RPM_BIN_FILE_NAME     "${CPACK_PACKAGE_NAME}-bin-${CPACK_PACKAGE_VERSION}-${CPACK_RPM_PACKAGE_RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE}.rpm")
+
+
+#### DEB SPECIFIC #################################################
 set( CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.13)" )
 set( CPACK_DEBIAN_SECTION "stable" )
 set( CPACK_DEBIAN_PACKAGE_SECTION "science" )

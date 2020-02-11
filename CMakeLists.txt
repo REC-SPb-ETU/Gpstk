@@ -9,6 +9,7 @@
 cmake_minimum_required( VERSION 2.8.5 )
 
 project( GPSTK )
+set (PACKAGE_RELEASE 1)
 set( GPSTK_VERSION_MAJOR "2" )
 set( GPSTK_VERSION_MINOR "12" )
 set( GPSTK_VERSION_PATCH "0" )
@@ -60,9 +61,6 @@ if( BUILD_PYTHON AND !BUILD_EXT )
     message( WARNING "Setting BUILD_EXT = TRUE" )
     set( BUILD_EXT TRUE )
 endif()
-
-
-include( BuildSetup.cmake )
 
 #============================================================
 # Core Library Target Files
@@ -143,13 +141,13 @@ endif()
 #============================================================
 
 # GPSTk shared-object library (e.g. libgpstk.so) build target
-add_library( gpstk ${STADYN} ${GPSTK_SRC_FILES} ${GPSTK_INC_FILES} )
+add_library( gpstk SHARED ${STADYN} ${GPSTK_SRC_FILES} ${GPSTK_INC_FILES} )
 
 # GPSTk library install target
-install( TARGETS gpstk DESTINATION "${CMAKE_INSTALL_LIBDIR}" EXPORT "${EXPORT_TARGETS_FILENAME}" )
+install( TARGETS gpstk DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT lib EXPORT "${EXPORT_TARGETS_FILENAME}" )
 
 # GPSTk header file install target
-install( FILES ${GPSTK_INC_FILES} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/gpstk" )
+install( FILES ${GPSTK_INC_FILES} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/gpstk" COMPONENT devel)
 
 
 #============================================================
@@ -196,24 +194,25 @@ if( BUILD_EXT )
        add_subdirectory( swig )
    endif()
 endif()
-	
+
+include( BuildSetup.cmake )
 
 #----------------------------------------
 # Export the project import cmake files.
 #----------------------------------------
 include( CMakePackageConfigHelpers )
 set( INSTALL_CONFIG_DIR ${CMAKE_INSTALL_DATADIR}/cmake/GPSTK)
-configure_package_config_file( ${CMAKE_CURRENT_SOURCE_DIR}/GPSTKConfig.cmake.in 
+configure_package_config_file( ${CMAKE_CURRENT_SOURCE_DIR}/GPSTKConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/GPSTKConfig.cmake
     INSTALL_DESTINATION ${INSTALL_CONFIG_DIR}
     PATH_VARS CMAKE_INSTALL_LIBDIR CMAKE_INSTALL_INCLUDEDIR CMAKE_INSTALL_BINDIR CMAKE_INSTALL_PREFIX INSTALL_CONFIG_DIR )
 write_basic_package_version_file( ${CMAKE_CURRENT_BINARY_DIR}/GPSTKConfigVersion.cmake
     VERSION ${GPSTK_VERSION}
     COMPATIBILITY ExactVersion )
-install( FILES 
-    ${CMAKE_CURRENT_BINARY_DIR}/GPSTKConfig.cmake 
+install( FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/GPSTKConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/GPSTKConfigVersion.cmake
-    DESTINATION 
+    DESTINATION
     ${INSTALL_CONFIG_DIR} )
 
 install( EXPORT ${EXPORT_TARGETS_FILENAME} DESTINATION ${INSTALL_CONFIG_DIR} )
