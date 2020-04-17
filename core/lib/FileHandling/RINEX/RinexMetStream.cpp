@@ -49,6 +49,13 @@ namespace gpstk
       init();
    }
 
+   RinexMetStream ::
+   RinexMetStream(std::basic_iostream<char>& anotherStream)
+   : FFTextStream(anotherStream)
+   {
+     init();
+   }
+
 
    RinexMetStream ::
    RinexMetStream(const char* fn, std::ios::openmode mode)

@@ -55,6 +55,12 @@ namespace gpstk
    {
    }
 
+   FFStream::FFStream(std::basic_iostream<char>& anotherStream)
+   {
+     std::basic_iostream<char>::init(anotherStream.rdbuf());
+     recordNumber= 0;
+     clear();
+   }
 
    FFStream ::
    FFStream( const char* fn,
@@ -104,15 +110,17 @@ namespace gpstk
          // shouldn't be done AFTER the new stream is open.  Child
          // classes typically will want to do their initialization
          // AFTER the parent.
-      init(fn, mode);
-      std::fstream::open(fn, mode);
+      init(fn);
+      fileStream.open(fn, mode);
+      rdbuf(fileStream.rdbuf());
+      setstate(fileStream.rdstate());
    }  // End of method 'FFStream::open()'
 
 
    void FFStream ::
-   init( const char* fn, std::ios::openmode mode )
+   init( const char* fn)
    {
-      close();
+      fileStream.close();
       clear();
       filename = std::string(fn);
       recordNumber = 0;
@@ -377,6 +385,19 @@ namespace gpstk
       }
 
    }  // End of method 'FFStream::tryFFStreamPut()'
+
+  void FFStream::close()
+  {
+    if (fileStream && fileStream.is_open())
+      fileStream.close();
+  }
+
+  bool FFStream::is_open()
+  {
+    if (fileStream)
+      return fileStream.is_open();
+    return true;
+  }
 
 
 

@@ -55,6 +55,10 @@ namespace gpstk
    {
    }
 
+   FFTextStream::FFTextStream(std::basic_iostream<char>& anotherStream)
+   : FFStream(anotherStream), lineNumber(0)
+   {}
+
 
    FFTextStream ::
    FFTextStream( const char* fn,

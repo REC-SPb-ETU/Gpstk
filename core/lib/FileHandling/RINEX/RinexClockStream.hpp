@@ -78,7 +78,9 @@ namespace gpstk
           */
       RinexClockStream( const std::string& fn,
                         std::ios::openmode mode=std::ios::in );
-      
+
+      RinexClockStream(std::basic_iostream<char>& anotherStream);
+
          /// Destructor
       virtual ~RinexClockStream();
 

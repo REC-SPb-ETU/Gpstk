@@ -62,7 +62,9 @@ namespace gpstk
    public:
          /// Default constructor
       Rinex3NavStream();
-      
+
+      Rinex3NavStream(std::basic_iostream<char>& anotherStream);
+
          /** Constructor 
           * Opens a file named \a fn using ios::openmode \a mode.
           */

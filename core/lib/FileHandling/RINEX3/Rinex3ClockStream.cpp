@@ -48,7 +48,13 @@ namespace gpstk
    {
       init();
    }
-      
+
+   Rinex3ClockStream::Rinex3ClockStream(std::basic_iostream<char>& anotherStream)
+   : FFTextStream(anotherStream)
+   {
+     init();
+   }
+
    Rinex3ClockStream ::
    Rinex3ClockStream(const char* filename, std::ios::openmode mode)
          : FFTextStream(filename, mode)

@@ -67,6 +67,13 @@ namespace gpstk
       init();
    }
 
+   RinexObsStream ::
+   RinexObsStream(std::basic_iostream<char>& anotherStream)
+   : FFTextStream(anotherStream)
+   {
+     init();
+   }
+
 
    RinexObsStream ::
    ~RinexObsStream()

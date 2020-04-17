@@ -72,7 +72,9 @@ namespace gpstk
          /// default constructor
       RinexMetStream();
 
-         /** Constructor 
+      RinexMetStream(std::basic_iostream<char>& anotherStream);
+
+         /** Constructor
           * Opens a file named \a fn using ios::openmode \a mode.
           */
       RinexMetStream(const char* fn, std::ios::openmode mode=std::ios::in);

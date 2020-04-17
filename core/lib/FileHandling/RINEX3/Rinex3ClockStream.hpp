@@ -60,6 +60,8 @@ namespace gpstk
          /// Default constructor
       Rinex3ClockStream();
 
+      Rinex3ClockStream(std::basic_iostream<char>& anotherStream);
+
          /** Common constructor: open (default: read mode)
           * @param[in] filename the name of the ASCII Rinex3Clock
           *   format file to be opened

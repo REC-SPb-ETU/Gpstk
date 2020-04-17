@@ -66,7 +66,14 @@ namespace gpstk
    {
       init();
    }
-            
+
+   RinexClockStream ::
+   RinexClockStream(std::basic_iostream<char>& anotherStream)
+   : FFTextStream(anotherStream)
+   {
+     init();
+   }
+
       
    RinexClockStream ::
    ~RinexClockStream()

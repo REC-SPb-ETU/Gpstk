@@ -66,6 +66,8 @@ namespace gpstk
          /// Default constructor
       Rinex3ObsStream();
 
+      Rinex3ObsStream(std::basic_iostream<char>& anotherStream);
+
          /** Common constructor.
           *
           * @param[in] fn the RINEX file to open

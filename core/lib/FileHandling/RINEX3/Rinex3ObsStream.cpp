@@ -49,6 +49,10 @@ namespace gpstk
       init();
    }
 
+   Rinex3ObsStream::Rinex3ObsStream(std::basic_iostream<char>& anotherStream)
+   : FFTextStream(anotherStream), headerRead(false), timesystem(TimeSystem::GPS)
+   {}
+
 
    Rinex3ObsStream ::
    Rinex3ObsStream( const char* fn,

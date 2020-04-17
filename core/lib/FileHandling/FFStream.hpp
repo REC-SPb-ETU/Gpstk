@@ -118,7 +118,7 @@ namespace gpstk
        * @warning When using open(), the internal header data of the stream
        * is not guaranteed to be retained.
        */
-   class FFStream : public std::fstream
+   class FFStream : public std::basic_iostream<char>
    {
    public:
          /// Default constructor, initialize internal data
@@ -126,6 +126,8 @@ namespace gpstk
 
          /// Virtual destructor, close the stream etc.
       virtual ~FFStream();
+
+      FFStream(std::basic_iostream<char>& anotherStream);
 
          /** Common constructor.
           *
@@ -170,6 +172,10 @@ namespace gpstk
          /// Check if the input stream is the kind of RinexObsStream
       static bool isFFStream(std::istream& i);
 
+      virtual void close();
+
+      virtual bool is_open();
+
          /// This stores the most recently thrown exception.
       FFStreamError mostRecentException;
 
@@ -185,6 +191,7 @@ namespace gpstk
 
    protected:
 
+     std::fstream fileStream;
 
          /// Encapsulates shared try/catch blocks for all file types
          /// to hide std::exception.
@@ -199,7 +206,7 @@ namespace gpstk
 
    private:
          /// Initialize internal data structures according to file name & mode
-      void init(const char* fn, std::ios::openmode mode);
+      void init(const char* fn);
 
    }; // End of class 'FFStream'
 

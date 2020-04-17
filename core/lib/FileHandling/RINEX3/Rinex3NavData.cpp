@@ -143,7 +143,7 @@ namespace gpstk
       xmitTime = static_cast<GPSWeekSecond>(gpseph.transmitTime).getSOW();
       weeknum = static_cast<GPSWeekSecond>(gpseph.transmitTime).getWeek();
 
-      accuracy = gpseph.accuracyFlag;
+      accuracy = gpseph.accuracy;
       health = gpseph.health;
 
       codeflgs = gpseph.codeflags;

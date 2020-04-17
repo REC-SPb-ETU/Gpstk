@@ -84,6 +84,8 @@ namespace gpstk
       RinexObsStream( const std::string fn,
                       std::ios::openmode mode=std::ios::in );
 
+      RinexObsStream(std::basic_iostream<char>& anotherStream);
+
          /// Destructor
       virtual ~RinexObsStream();
 

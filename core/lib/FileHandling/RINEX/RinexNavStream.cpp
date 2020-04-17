@@ -49,6 +49,13 @@ namespace gpstk
       init();
    }
 
+   RinexNavStream ::
+   RinexNavStream(std::basic_iostream<char>& anotherStream)
+   : FFTextStream(anotherStream)
+   {
+     init();
+   }
+
 
    RinexNavStream ::
    RinexNavStream(const char* fn, std::ios::openmode mode)

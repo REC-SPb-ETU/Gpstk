@@ -67,6 +67,8 @@ namespace gpstk
          /// Destructor
       virtual ~FFTextStream();
 
+      FFTextStream(std::basic_iostream<char>& anotherStream);
+
          /** Common constructor.
           *
           * @param fn file name.
