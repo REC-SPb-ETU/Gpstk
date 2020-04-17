@@ -156,7 +156,7 @@ endif()
 #----------------------------------------
 configure_file( "${PROJECT_SOURCE_DIR}/build_config.h.in" "${PROJECT_BINARY_DIR}/generated/build_config.h" )
 include_directories( "${PROJECT_BINARY_DIR}/generated/" ) 
-install( FILES "${PROJECT_BINARY_DIR}/generated/build_config.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}" )
+install( FILES "${PROJECT_BINARY_DIR}/generated/build_config.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}" COMPONENT devel)
 
 
 #----------------------------------------
@@ -178,32 +178,9 @@ elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
         set( CPACK_GENERATOR "DEB;TGZ" )
     else (${LINUX_DISTRO} MATCHES "RedHatEnterpriseServer")
         message( STATUS "Detected a Linux machine")
-        set( CPACK_GENERATOR "DEB;TGZ" )    
+        set( CPACK_GENERATOR "DEB;TGZ" )
     endif()
 elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
     set( CPACK_GENERATOR "NSIS;ZIP" )
     set( CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
 endif()
-
-set( CPACK_PACKAGE_DESCRIPTION_SUMMARY "Libraries and applications for the GNSS processing GPSTk toolkit.") 
-set( CPACK_PACKAGE_VENDOR "ARL:UT SGL" )
-set( CPACK_PACKAGE_CONTACT "Bryan Parsons <bparsons@arlut.utexas.edu>" )
-set( CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md" )
-set( CPACK_PACKAGE_VERSION_MAJOR "${GPSTK_VERSION_MAJOR}" )
-set( CPACK_PACKAGE_VERSION_MINOR "${GPSTK_VERSION_MINOR}" )
-set( CPACK_PACKAGE_VERSION_PATCH "${GPSTK_VERSION_PATCH}" )
-set( CPACK_INCLUDE_TOPLEVEL_DIRECTORY "OFF" )
-set( CPACK_PACKAGE_INSTALL_DIRECTORY "gpstk")
-set( CPACK_TOPLEVEL_TAG "gpstk" ) 
-
-set( CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.13)" )
-set( CPACK_DEBIAN_SECTION "stable" )
-set( CPACK_DEBIAN_PACKAGE_SECTION "science" )
-
-set( CPACK_SOURCE_IGNORE_FILES "build/" "build-.*/" "examples/" "ref/" ".*/[.].*" )
-set( CPACK_SOURCE_GENERATOR "TGZ")
-
-# Prevents unstripped-binary-or-object Lintian errors.
-SET(CPACK_STRIP_FILES "1")
-
-include( CPack )
